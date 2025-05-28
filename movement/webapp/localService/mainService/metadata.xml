@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZSD_068_GW_MOVEMENT_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="Movement" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MovId"/>
+                </Key>
+                <Property Name="MovId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Mov ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Mov Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Mov Location" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsDone" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X = True, - = False, Space = Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZSD_068_GW_MOVEMENT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="MovementSet" EntityType="ZSD_068_GW_MOVEMENT_SRV.Movement" sap:searchable="true" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="https://A03Z.UCC.OVGU.DE:443/sap/opu/odata/sap/ZSD_068_GW_MOVEMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://A03Z.UCC.OVGU.DE:443/sap/opu/odata/sap/ZSD_068_GW_MOVEMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
