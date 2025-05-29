@@ -5,6 +5,9 @@
   <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
     <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
   </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+  </edmx:Reference>
   <edmx:Reference Uri="/sap/opu/odata/sap/ZSD_068_GW_MOVEMENT_SRV/$metadata">
     <edmx:Include Namespace="ZSD_068_GW_MOVEMENT_SRV"/>
   </edmx:Reference>
@@ -14,25 +17,33 @@
 
       <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement">
 
-        <!-- List Report: tabelweergave -->
+        <!-- List Report: table display -->
         <Annotation Term="UI.LineItem">
           <Collection>
             <Record Type="UI.DataField">
               <PropertyValue Property="Value" Path="MovId"/>
+              <PropertyValue Property="Label" String="Movement ID"/>
             </Record>
             <Record Type="UI.DataField">
               <PropertyValue Property="Value" Path="Type"/>
+              <PropertyValue Property="Label" String="Movement Type"/>
             </Record>
             <Record Type="UI.DataField">
               <PropertyValue Property="Value" Path="Location"/>
+              <PropertyValue Property="Label" String="Location"/>
             </Record>
             <Record Type="UI.DataField">
               <PropertyValue Property="Value" Path="IsDone"/>
+              <PropertyValue Property="Label" String="Status"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="MovDate"/>
+              <PropertyValue Property="Label" String="Movement Date"/>
             </Record>
           </Collection>
         </Annotation>
 
-        <!-- Header Info -->
+        <!-- Header Info for Object Page -->
         <Annotation Term="UI.HeaderInfo">
           <Record>
             <PropertyValue Property="TypeName" String="Movement"/>
@@ -43,37 +54,68 @@
                 <PropertyValue Property="Label" String="Movement ID"/>
               </Record>
             </PropertyValue>
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="Type"/>
+                <PropertyValue Property="Label" String="Movement Type"/>
+              </Record>
+            </PropertyValue>
           </Record>
         </Annotation>
 
-        <!-- Filtervelden -->
+        <!-- Filter fields for List Report -->
         <Annotation Term="UI.SelectionFields">
           <Collection>
-            <PropertyPath>MovId</PropertyPath>
             <PropertyPath>Type</PropertyPath>
             <PropertyPath>Location</PropertyPath>
+            <PropertyPath>IsDone</PropertyPath>
+            <PropertyPath>MovDate</PropertyPath>
           </Collection>
         </Annotation>
 
-        <!-- Create/Edit UI: Identification sectie -->
-        <Annotation Term="UI.Identification">
+        <!-- Create Form Configuration -->
+        <Annotation Term="UI.FieldGroup" Qualifier="CreateDialog">
+          <Record>
+            <PropertyValue Property="Label" String="Create Movement"/>
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="Type"/>
+                  <PropertyValue Property="Label" String="Movement Type"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="Location"/>
+                  <PropertyValue Property="Label" String="Location"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="IsDone"/>
+                  <PropertyValue Property="Label" String="Status"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="MovDate"/>
+                  <PropertyValue Property="Label" String="Movement Date"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="PARTNER"/>
+                  <PropertyValue Property="Label" String="Business Partner"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+
+        <!-- Object Page Layout -->
+        <Annotation Term="UI.Facets">
           <Collection>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="MovId"/>
-              <PropertyValue Property="Label" String="Movement ID"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="Type"/>
-              <PropertyValue Property="Label" String="Type"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="Location"/>
-              <PropertyValue Property="Label" String="Location"/>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GeneralInfoFacet"/>
+              <PropertyValue Property="Label" String="General Information"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
             </Record>
           </Collection>
         </Annotation>
 
-        <!-- Create/Edit UI: FieldGroup General Information -->
+        <!-- General Information FieldGroup -->
         <Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
           <Record>
             <PropertyValue Property="Label" String="General Information"/>
@@ -81,32 +123,67 @@
               <Collection>
                 <Record Type="UI.DataField">
                   <PropertyValue Property="Value" Path="MovId"/>
+                  <PropertyValue Property="Label" String="Movement ID"/>
                 </Record>
                 <Record Type="UI.DataField">
                   <PropertyValue Property="Value" Path="Type"/>
+                  <PropertyValue Property="Label" String="Movement Type"/>
                 </Record>
                 <Record Type="UI.DataField">
                   <PropertyValue Property="Value" Path="Location"/>
+                  <PropertyValue Property="Label" String="Location"/>
                 </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-
-        <!-- Create/Edit UI: FieldGroup Status -->
-        <Annotation Term="UI.FieldGroup" Qualifier="StatusInfo">
-          <Record>
-            <PropertyValue Property="Label" String="Status"/>
-            <PropertyValue Property="Data">
-              <Collection>
                 <Record Type="UI.DataField">
                   <PropertyValue Property="Value" Path="IsDone"/>
+                  <PropertyValue Property="Label" String="Status"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="MovDate"/>
+                  <PropertyValue Property="Label" String="Movement Date"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="PARTNER"/>
+                  <PropertyValue Property="Label" String="Business Partner"/>
                 </Record>
               </Collection>
             </PropertyValue>
           </Record>
         </Annotation>
 
+      </Annotations>
+
+      <!-- Property-level annotations -->
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/MovId">
+        <Annotation Term="Common.Label" String="Movement ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Type">
+        <Annotation Term="Common.Label" String="Movement Type"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Location">
+        <Annotation Term="Common.Label" String="Location"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/IsDone">
+        <Annotation Term="Common.Label" String="Status"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/MovDate">
+        <Annotation Term="Common.Label" String="Movement Date"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/PARTNER">
+        <Annotation Term="Common.Label" String="Business Partner"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
       </Annotations>
 
     </Schema>

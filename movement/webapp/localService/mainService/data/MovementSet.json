@@ -1,0 +1,26 @@
+[
+    {
+      "MovId": "M001",
+      "Type": "LOAD",
+      "Location": "WH001",
+      "IsDone": "",
+      "MovDate": "/Date(1640995200000)/",
+      "Partner": "1000000001"
+    },
+    {
+      "MovId": "M002", 
+      "Type": "UNLOAD",
+      "Location": "WH002",
+      "IsDone": "X",
+      "MovDate": "/Date(1641081600000)/",
+      "Partner": "1000000002"
+    },
+    {
+      "MovId": "M003",
+      "Type": "BOTH", 
+      "Location": "WH003",
+      "IsDone": "",
+      "MovDate": "/Date(1641168000000)/",
+      "Partner": "1000000003"
+    }
+  ]

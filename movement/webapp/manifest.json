@@ -130,6 +130,26 @@
             },
             "tableSettings": {
               "type": "ResponsiveTable"
+            },
+            "creationMode": "CreationDialog",
+            "createWithParameterDialog": {
+              "fields": {
+                "Type": {
+                  "path": "Type"
+                },
+                "Location": {
+                  "path": "Location"
+                },
+                "IsDone": {
+                  "path": "IsDone"
+                },
+                "MovDate": {
+                  "path": "MovDate"
+                },
+                "Partner": {
+                  "path": "Partner"
+                }
+              }
             }
           }
         },

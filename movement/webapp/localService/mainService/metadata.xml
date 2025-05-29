@@ -3,18 +3,44 @@
     <edmx:DataServices m:DataServiceVersion="2.0">
         <Schema Namespace="ZSD_068_GW_MOVEMENT_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
             <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            
             <EntityType Name="Movement" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="MovId"/>
                 </Key>
-                <Property Name="MovId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Mov ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Mov Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Mov Location" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="IsDone" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X = True, - = False, Space = Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MovId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Movement ID" sap:creatable="false" sap:updatable="false" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Movement Type" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Location" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="IsDone" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Status" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="MovDate" Type="Edm.DateTime" Nullable="true" sap:label="Movement Date" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="PARTNER" Type="Edm.String" Nullable="true" MaxLength="10" sap:unicode="false" sap:label="Business Partner" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
             </EntityType>
+
+            <EntityType Name="MovementItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MovId"/>
+                    <PropertyRef Name="ItemId"/>
+                </Key>
+                <Property Name="MovId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Movement ID" sap:creatable="true" sap:updatable="false" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="ItemId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Item ID" sap:creatable="true" sap:updatable="false" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="true" MaxLength="40" sap:unicode="false" sap:label="Material Number" sap:creatable="true" sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="Umziz" Type="Edm.Decimal" Nullable="true" Precision="5" Scale="0" sap:label="Conversion Factor" sap:creatable="true" sap:updatable="true"/>
+                <Property Name="Meins" Type="Edm.String" Nullable="true" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="true" sap:updatable="true"/>
+                <Property Name="Brgew" Type="Edm.Decimal" Nullable="true" Precision="13" Scale="3" sap:label="Gross Weight" sap:creatable="true" sap:updatable="true"/>
+            </EntityType>
+
             <EntityContainer Name="ZSD_068_GW_MOVEMENT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
-                <EntitySet Name="MovementSet" EntityType="ZSD_068_GW_MOVEMENT_SRV.Movement" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="MovementSet" EntityType="ZSD_068_GW_MOVEMENT_SRV.Movement" sap:searchable="true" sap:content-version="1" sap:creatable="true" sap:updatable="true" sap:deletable="true"/>
+                <EntitySet Name="MovementItemSet" EntityType="ZSD_068_GW_MOVEMENT_SRV.MovementItem" sap:searchable="true" sap:content-version="1" sap:creatable="true" sap:updatable="true" sap:deletable="true"/>
+                
+                <AssociationSet Name="MovementToItemsSet" Association="ZSD_068_GW_MOVEMENT_SRV.MovementToItems" sap:creatable="false" sap:updatable="false" sap:deletable="false"/>
             </EntityContainer>
+
+            <Association Name="MovementToItems" sap:content-version="1">
+                <End Type="ZSD_068_GW_MOVEMENT_SRV.Movement" Multiplicity="1" Role="FromRole_MovementToItems"/>
+                <End Type="ZSD_068_GW_MOVEMENT_SRV.MovementItem" Multiplicity="*" Role="ToRole_MovementToItems"/>
+            </Association>
+            
             <atom:link rel="self" href="https://A03Z.UCC.OVGU.DE:443/sap/opu/odata/sap/ZSD_068_GW_MOVEMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
             <atom:link rel="latest-version" href="https://A03Z.UCC.OVGU.DE:443/sap/opu/odata/sap/ZSD_068_GW_MOVEMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
         </Schema>

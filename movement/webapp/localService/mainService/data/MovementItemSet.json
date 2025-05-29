@@ -1,0 +1,18 @@
+[
+    {
+      "MovId": "M001",
+      "ItemId": "0001",
+      "Matnr": "MAT001",
+      "Umziz": 1,
+      "Meins": "KG",
+      "Brgew": 25.500
+    },
+    {
+      "MovId": "M001",
+      "ItemId": "0002", 
+      "Matnr": "MAT002",
+      "Umziz": 1,
+      "Meins": "KG",
+      "Brgew": 15.750
+    }
+  ]
