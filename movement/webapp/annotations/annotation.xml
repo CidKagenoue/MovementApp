@@ -15,6 +15,7 @@
   <edmx:DataServices>
     <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
 
+      <!-- ========== MOVEMENT ENTITY ANNOTATIONS ========== -->
       <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement">
 
         <!-- List Report: table display -->
@@ -33,12 +34,20 @@
               <PropertyValue Property="Label" String="Location"/>
             </Record>
             <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="MovDate"/>
+              <PropertyValue Property="Label" String="Movement Date"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="Partner"/>
+              <PropertyValue Property="Label" String="Business Partner"/>
+            </Record>
+            <Record Type="UI.DataField">
               <PropertyValue Property="Value" Path="IsDone"/>
               <PropertyValue Property="Label" String="Status"/>
             </Record>
             <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="MovDate"/>
-              <PropertyValue Property="Label" String="Movement Date"/>
+              <PropertyValue Property="Value" Path="CheckedSignature"/>
+              <PropertyValue Property="Label" String="Signature Checked"/>
             </Record>
           </Collection>
         </Annotation>
@@ -68,49 +77,32 @@
           <Collection>
             <PropertyPath>Type</PropertyPath>
             <PropertyPath>Location</PropertyPath>
-            <PropertyPath>IsDone</PropertyPath>
             <PropertyPath>MovDate</PropertyPath>
+            <PropertyPath>Partner</PropertyPath>
+            <PropertyPath>IsDone</PropertyPath>
           </Collection>
         </Annotation>
 
-        <!-- Create Form Configuration -->
-        <Annotation Term="UI.FieldGroup" Qualifier="CreateDialog">
-          <Record>
-            <PropertyValue Property="Label" String="Create Movement"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="Type"/>
-                  <PropertyValue Property="Label" String="Movement Type"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="Location"/>
-                  <PropertyValue Property="Label" String="Location"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="IsDone"/>
-                  <PropertyValue Property="Label" String="Status"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="MovDate"/>
-                  <PropertyValue Property="Label" String="Movement Date"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="PARTNER"/>
-                  <PropertyValue Property="Label" String="Business Partner"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-
-        <!-- Object Page Layout -->
+        <!-- Object Page Layout with Facets -->
         <Annotation Term="UI.Facets">
           <Collection>
+            <!-- General Information Facet -->
             <Record Type="UI.ReferenceFacet">
               <PropertyValue Property="ID" String="GeneralInfoFacet"/>
               <PropertyValue Property="Label" String="General Information"/>
               <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+            </Record>
+            <!-- Material Information Facet -->
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="MaterialInfoFacet"/>
+              <PropertyValue Property="Label" String="Material Information"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#MaterialInfo"/>
+            </Record>
+            <!-- Administrative Data Facet -->
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="AdminFacet"/>
+              <PropertyValue Property="Label" String="Administrative Data"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AdminInfo"/>
             </Record>
           </Collection>
         </Annotation>
@@ -134,16 +126,66 @@
                   <PropertyValue Property="Label" String="Location"/>
                 </Record>
                 <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="IsDone"/>
-                  <PropertyValue Property="Label" String="Status"/>
-                </Record>
-                <Record Type="UI.DataField">
                   <PropertyValue Property="Value" Path="MovDate"/>
                   <PropertyValue Property="Label" String="Movement Date"/>
                 </Record>
                 <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="PARTNER"/>
+                  <PropertyValue Property="Value" Path="Partner"/>
                   <PropertyValue Property="Label" String="Business Partner"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+
+        <!-- Material Information FieldGroup -->
+        <Annotation Term="UI.FieldGroup" Qualifier="MaterialInfo">
+          <Record>
+            <PropertyValue Property="Label" String="Material Information"/>
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="ItemId"/>
+                  <PropertyValue Property="Label" String="Item ID"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="Matnr"/>
+                  <PropertyValue Property="Label" String="Material Number"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="Umziz"/>
+                  <PropertyValue Property="Label" String="Conversion Factor"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="Meins"/>
+                  <PropertyValue Property="Label" String="Base Unit of Measure"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+
+        <!-- Administrative Information FieldGroup -->
+        <Annotation Term="UI.FieldGroup" Qualifier="AdminInfo">
+          <Record>
+            <PropertyValue Property="Label" String="Administrative Information"/>
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="IsDone"/>
+                  <PropertyValue Property="Label" String="Movement Finished"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="CheckedSignature"/>
+                  <PropertyValue Property="Label" String="Signature Checked"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="ChgDate"/>
+                  <PropertyValue Property="Label" String="Changed On"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="ChgUser"/>
+                  <PropertyValue Property="Label" String="Changed By"/>
                 </Record>
               </Collection>
             </PropertyValue>
@@ -152,7 +194,9 @@
 
       </Annotations>
 
-      <!-- Property-level annotations -->
+      <!-- ========== PROPERTY-LEVEL ANNOTATIONS ========== -->
+      
+      <!-- Movement Properties -->
       <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/MovId">
         <Annotation Term="Common.Label" String="Movement ID"/>
         <Annotation Term="UI.HiddenFilter" Bool="false"/>
@@ -171,18 +215,56 @@
         <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
       </Annotations>
 
-      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/IsDone">
-        <Annotation Term="Common.Label" String="Status"/>
-        <Annotation Term="UI.HiddenFilter" Bool="false"/>
-      </Annotations>
-
       <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/MovDate">
         <Annotation Term="Common.Label" String="Movement Date"/>
         <Annotation Term="UI.HiddenFilter" Bool="false"/>
       </Annotations>
 
-      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/PARTNER">
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Partner">
         <Annotation Term="Common.Label" String="Business Partner"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/IsDone">
+        <Annotation Term="Common.Label" String="Movement Finished"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/CheckedSignature">
+        <Annotation Term="Common.Label" String="Signature Checked"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/ChgDate">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/ChgUser">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+
+      <!-- Material-related Properties -->
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/ItemId">
+        <Annotation Term="Common.Label" String="Item ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Matnr">
+        <Annotation Term="Common.Label" String="Material Number"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Umziz">
+        <Annotation Term="Common.Label" String="Conversion Factor"/>
+        <Annotation Term="UI.HiddenFilter" Bool="false"/>
+      </Annotations>
+
+      <Annotations Target="ZSD_068_GW_MOVEMENT_SRV.Movement/Meins">
+        <Annotation Term="Common.Label" String="Base Unit of Measure"/>
         <Annotation Term="UI.HiddenFilter" Bool="false"/>
       </Annotations>
 
